@@ -17,8 +17,8 @@ if [ -f ${zeitstempel}.png ]
 		curl -T ${zeitstempel}.png -u ${ftpuser}:${ftppass} ${ftp}${sha1sum}.png
 		rm ${zeitstempel}.png
 		echo "$zeitstempel URL: ${http}${sha1sum}.png" >> ${log}
-		#notify-send -t 2000 "Screenshot hochgeladen nach: ${http}${sha1sum}.png"
 		echo "${http}${sha1sum}.png" | xclip -selection c
+		notify-send -t 3000 "Screenshot hochgeladen!"
 	else
 		bash ${script}
 fi
