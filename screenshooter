@@ -1,0 +1,24 @@
+#!/bin/bash
+#Variablen:
+ordner="/home/robin/bin/"
+script="screenshot"
+log="/home/robin/bin/screenshot.log"
+ftp="ftp://robingroppe.de/htdocs/screens/"
+ftpuser="user"
+ftppass="password"
+http="http://www.robingroppe.de/screens/"
+zeitstempel="$(date +%d-%m-%Y_%H-%M-%S)"
+#Script:
+cd ${ordner}
+gnome-screenshot -a -f ${zeitstempel}.png
+if [ -f ${zeitstempel}.png ]
+	then
+		sha1sum="$(sha1sum ${zeitstempel}.png | cut -d' ' -f1)"
+		curl -T ${zeitstempel}.png -u ${ftpuser}:${ftppass} ${ftp}${sha1sum}.png
+		rm ${zeitstempel}.png
+		echo "$zeitstempel URL: ${http}${sha1sum}.png" >> ${log}
+		#notify-send -t 2000 "Screenshot hochgeladen nach: ${http}${sha1sum}.png"
+		echo "${http}${sha1sum}.png" | xclip -selection c
+	else
+		bash ${script}
+fi
