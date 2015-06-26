@@ -1,8 +1,8 @@
 #!/bin/bash
 #Variablen:
-ordner="/home/robin/bin/"
+ordner="/home/robin/.bin/screenshooter/"
 script="screenshooter"
-log="/home/robin/bin/screenshooter.log"
+log="/home/robin/.bin/screenshooter/screenshooter.log"
 ftp="ftp://robingroppe.de/htdocs/screens/"
 ftpuser="user"
 ftppass="password"
@@ -11,7 +11,7 @@ zeitstempel="$(date +%d-%m-%Y_%H-%M-%S)"
 #Script:
 cd ${ordner}
 gnome-screenshot -a -f ${zeitstempel}.png
-if [ -f ${zeitstempel}.png ]
+if [ -e ${zeitstempel}.png ]
 	then
 		sha1sum="$(sha1sum ${zeitstempel}.png | cut -d' ' -f1)"
 		curl -T ${zeitstempel}.png -u ${ftpuser}:${ftppass} ${ftp}${sha1sum}.png
@@ -20,5 +20,5 @@ if [ -f ${zeitstempel}.png ]
 		echo "${http}${sha1sum}.png" | xclip -selection c
 		notify-send -t 3000 "Screenshot hochgeladen!"
 	else
-		bash ${script}
+		exit 1
 fi
