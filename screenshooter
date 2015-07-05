@@ -9,13 +9,13 @@ ftppass="password"
 http="http://www.robingroppe.de/screens/"
 zeitstempel="$(date +%d-%m-%Y_%H-%M-%S)"
 #Script:
-cd ${ordner}
+cd "${ordner}"
 gnome-screenshot -a -f ${zeitstempel}.png
 if [ -e ${zeitstempel}.png ]
 	then
 		sha1sum="$(sha1sum ${zeitstempel}.png | cut -d' ' -f1)"
 		curl -T ${zeitstempel}.png -u ${ftpuser}:${ftppass} ${ftp}${sha1sum}.png
-		rm ${zeitstempel}.png
+		rm "${zeitstempel}.png"
 		echo "$zeitstempel URL: ${http}${sha1sum}.png" >> ${log}
 		echo "${http}${sha1sum}.png" | xclip -selection c
 		notify-send -t 3000 "Screenshot hochgeladen!"
