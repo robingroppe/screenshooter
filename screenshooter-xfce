@@ -10,7 +10,7 @@ http="http://www.robingroppe.de/screens/"
 zeitstempel="$(date +%d-%m-%Y_%H-%M-%S)"
 #Script:
 cd "${ordner}"
-xfce4-screenshooter -o 'cat' > ${zeitstempel}.png
+xfce4-screenshooter -r -o 'cat' > ${zeitstempel}.png
 if [ -e ${zeitstempel}.png ]
 	then
 		sha1sum="$(sha1sum ${zeitstempel}.png | cut -d' ' -f1)"
