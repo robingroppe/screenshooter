@@ -1,6 +1,6 @@
 # screenshooter
-A simple Script to create a Screenshot, upload it to your webspace and copy the URL in you clipboard.
-It's using SSH per default but can be configured to use FTP for the insane ones under us.
+A simple Script to create a screenshot, upload it to your webspace and copy the URL in you clipboard.
+It's using SSH by default but can be configured to use FTP for the insane ones under us.
 
 Works with Cinnamon, Gnome, Unity, MATE and KDE. :)
 
