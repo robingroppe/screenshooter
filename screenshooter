@@ -1,7 +1,5 @@
 #!/bin/bash
 #Variablen:
-script="screenshooter"
-
 ordner="/opt/USER/screenshooter/"
 log="/opt/USER/screenshooter/screenshooter.log"
 ssh="1"
