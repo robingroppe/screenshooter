@@ -24,7 +24,7 @@ if [ -e ${zeitstempel}.png ]
 		)
 		rm "${zeitstempel}.png"
 		echo "$zeitstempel URL: ${http}${sha1sum}.png" >> ${log}
-		echo "${http}${sha1sum}.png" | xclip -selection primary
+		echo "${http}${sha1sum}.png" | xclip -selection c
 		notify-send -t 3000 "Screenshot hochgeladen!"
 	else
 		exit 1
