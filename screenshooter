@@ -1,23 +1,32 @@
 #!/bin/bash
 #Variablen:
-ordner="/home/user/Bin/screenshooter/"
-log="/home/user/Bin/screenshooter/screenshooter.log"
-ftp="ftp://server.com/htdocs/screens/"
-ftpuser="user"
-ftppass="password"
-http="https://server.com/screens/"
+script="screenshooter"
+
+ordner="/opt/USER/screenshooter/"
+log="/opt/USER/screenshooter/screenshooter.log"
+ssh="1"
+host="ssh-or-ftp.host"
+path="/path/to/directory"
+user="user-remote"
+pass="ftp-pass"
+http="https://host/path/"
+
+zeitstempel="$(date +%d-%m-%Y_%H-%M-%S)"
 
 #Script:
-zeitstempel="$(date +%d-%m-%Y_%H-%M-%S)"
 cd "${ordner}"
 gnome-screenshot -a -f ${zeitstempel}.png
 if [ -e ${zeitstempel}.png ]
 	then
 		sha1sum="$(sha1sum ${zeitstempel}.png | cut -d' ' -f1)"
-		curl -T ${zeitstempel}.png -u ${ftpuser}:${ftppass} ${ftp}${sha1sum}.png
+		[ "$ssh" == "1" ] && (
+			scp ${zeitstempel}.png ${user}@${host}:${path}${sha1sum}.png
+		) || (
+			curl -T ${zeitstempel}.png -u ${user}:${pass} ${host}${path}${sha1sum}.png
+		)
 		rm "${zeitstempel}.png"
 		echo "$zeitstempel URL: ${http}${sha1sum}.png" >> ${log}
-		echo "${http}${sha1sum}.png" | xclip -selection c
+		echo "${http}${sha1sum}.png" | xclip -selection primary
 		notify-send -t 3000 "Screenshot hochgeladen!"
 	else
 		exit 1
