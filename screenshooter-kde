@@ -17,11 +17,12 @@ spectacle -b -r -o ${zeitstempel}.png
 if [ -e ${zeitstempel}.png ]
 	then
 		sha1sum="$(sha1sum ${zeitstempel}.png | cut -d' ' -f1)"
-		[ "$ssh" == "1" ] && (
-			scp ${zeitstempel}.png ${user}@${host}:${path}${sha1sum}.png
-		) || (
-			curl -T ${zeitstempel}.png -u ${user}:${pass} ${host}${path}${sha1sum}.png
-		)
+		if [ "$ssh" == "1" ] 
+			then	
+				scp ${zeitstempel}.png ${user}@${host}:${path}${sha1sum}.png
+			else
+				curl -T ${zeitstempel}.png -u ${user}:${pass} ${host}${path}${sha1sum}.png
+		fi
 		rm "${zeitstempel}.png"
 		echo "$zeitstempel URL: ${http}${sha1sum}.png" >> ${log}
 		echo "${http}${sha1sum}.png" | xclip -selection c
