@@ -19,7 +19,7 @@ if [ -e ${zeitstempel}.png ]
 		sha1sum="$(sha1sum ${zeitstempel}.png | cut -d' ' -f1)"
 		if [ "$ssh" == "1" ] 
 			then	
-				sshpass -p ${pass} scp ${zeitstempel}.png ${user}@${host}:${path}${sha1sum}.png
+				sshpass -p "${pass}" scp ${zeitstempel}.png ${user}@${host}:${path}${sha1sum}.png
 			else
 				curl -T ${zeitstempel}.png -u ${user}:${pass} ${host}${path}${sha1sum}.png
 		fi
